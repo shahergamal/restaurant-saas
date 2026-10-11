@@ -1,0 +1,730 @@
+// Sufra data model. Every tenant table carries organization_id and is protected by
+// PostgreSQL Row-Level Security (see migrations/*_rls). Money is integer halalas.
+// Quantities of stock are integer thousandths of the base unit ("milli").
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Plan {
+  starter
+  pro
+  chains
+}
+
+enum OrgStatus {
+  active
+  suspended
+}
+
+enum Role {
+  owner
+  manager
+  cashier
+  waiter
+  chef
+  accountant
+  inventory_clerk
+}
+
+enum DeviceType {
+  pos
+  kds
+  printer
+  terminal
+}
+
+enum TableStatus {
+  occupied
+  available
+  cleaning
+  out_of_service
+}
+
+enum TableShape {
+  square
+  round
+}
+
+enum Section {
+  family
+  single
+}
+
+enum Channel {
+  dine_in
+  takeaway
+  delivery
+}
+
+enum OrderStatus {
+  in_progress
+  ready
+  served
+  paid
+  cancelled
+}
+
+enum ItemStatus {
+  queued
+  cooking
+  ready
+  served
+}
+
+enum TicketStatus {
+  cooking
+  ready
+  served
+}
+
+enum PaymentMethod {
+  cash
+  mada
+  card
+  apple_pay
+  stc_pay
+}
+
+enum InvoiceType {
+  simplified
+  standard
+  credit
+  debit
+}
+
+enum InvoiceStatus {
+  pending
+  reported
+  cleared
+  rejected
+  warning
+}
+
+enum MovementType {
+  purchase
+  sale
+  waste
+  adjust
+  transfer
+}
+
+enum PoStatus {
+  draft
+  sent
+  received
+  cancelled
+}
+
+enum ExpenseCategory {
+  labor
+  overheads
+  packaging
+}
+
+model Organization {
+  id                String    @id @default(uuid()) @db.Uuid
+  nameAr            String    @map("name_ar")
+  nameEn            String    @map("name_en")
+  crNumber          String?   @map("cr_number")
+  vatNumber         String?   @map("vat_number")
+  plan              Plan      @default(pro)
+  status            OrgStatus @default(active)
+  serviceChargeBp   Int       @default(0) @map("service_charge_bp")
+  delayThresholdMin Int       @default(20) @map("delay_threshold_min")
+  targetMarginBp    Int       @default(2500) @map("target_margin_bp")
+  createdAt         DateTime  @default(now()) @map("created_at")
+
+  branches Branch[]
+  users    User[]
+
+  @@map("organizations")
+}
+
+model Branch {
+  id               String   @id @default(uuid()) @db.Uuid
+  organizationId   String   @map("organization_id") @db.Uuid
+  nameAr           String   @map("name_ar")
+  nameEn           String   @map("name_en")
+  address          String?
+  nationalAddress  String?  @map("national_address")
+  zatcaBranchName  String?  @map("zatca_branch_name")
+  timezone         String   @default("Asia/Riyadh")
+  createdAt        DateTime @default(now()) @map("created_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  devices      Device[]
+  floors       Floor[]
+  stations     Station[]
+  orders       Order[]
+
+  @@index([organizationId])
+  @@map("branches")
+}
+
+model Device {
+  id             String     @id @default(uuid()) @db.Uuid
+  organizationId String     @map("organization_id") @db.Uuid
+  branchId       String     @map("branch_id") @db.Uuid
+  type           DeviceType
+  serial         String
+  zatcaCsidRef   String?    @map("zatca_csid_ref")
+
+  branch Branch @relation(fields: [branchId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@map("devices")
+}
+
+model User {
+  id             String    @id @default(uuid()) @db.Uuid
+  organizationId String    @map("organization_id") @db.Uuid
+  nameAr         String    @map("name_ar")
+  nameEn         String    @map("name_en")
+  phone          String?
+  email          String    @unique
+  passwordHash   String    @map("password_hash")
+  /// TOTP secret, AES-256-GCM encrypted at rest (see crypto.service.ts)
+  mfaSecretEnc   String?   @map("mfa_secret_enc")
+  mfaEnabled     Boolean   @default(false) @map("mfa_enabled")
+  failedLogins   Int       @default(0) @map("failed_logins")
+  lockedUntil    DateTime? @map("locked_until")
+  locale         String    @default("ar")
+  numerals       String    @default("latn")
+  active         Boolean   @default(true)
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  organization Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  roles        UserBranchRole[]
+  sessions     Session[]
+
+  @@index([organizationId])
+  @@map("users")
+}
+
+model UserBranchRole {
+  id             String  @id @default(uuid()) @db.Uuid
+  organizationId String  @map("organization_id") @db.Uuid
+  userId         String  @map("user_id") @db.Uuid
+  /// null = role applies to every branch of the organization
+  branchId       String? @map("branch_id") @db.Uuid
+  role           Role
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, branchId, role])
+  @@index([organizationId])
+  @@map("user_branch_roles")
+}
+
+/// Refresh-token sessions. Tokens are stored as SHA-256 hashes and rotated on every use.
+model Session {
+  id             String    @id @default(uuid()) @db.Uuid
+  organizationId String    @map("organization_id") @db.Uuid
+  userId         String    @map("user_id") @db.Uuid
+  family         String    @db.Uuid
+  tokenHash      String    @unique @map("token_hash")
+  userAgent      String?   @map("user_agent")
+  ip             String?
+  expiresAt      DateTime  @map("expires_at")
+  revokedAt      DateTime? @map("revoked_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([family])
+  @@map("sessions")
+}
+
+model Floor {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  branchId       String @map("branch_id") @db.Uuid
+  nameAr         String @map("name_ar")
+  nameEn         String @map("name_en")
+  sort           Int    @default(0)
+  /// Static layout elements (walls, bar, kitchen, plants, entrance) as JSON for the floor map.
+  layout         Json   @default("{}")
+
+  branch Branch        @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  tables DiningTable[]
+
+  @@index([organizationId])
+  @@map("floors")
+}
+
+model DiningTable {
+  id             String      @id @default(uuid()) @db.Uuid
+  organizationId String      @map("organization_id") @db.Uuid
+  floorId        String      @map("floor_id") @db.Uuid
+  label          Int
+  seats          Int
+  x              Int
+  y              Int
+  shape          TableShape  @default(square)
+  status         TableStatus @default(available)
+  section        Section     @default(family)
+  waiterId       String?     @map("waiter_id") @db.Uuid
+  needsAttention Boolean     @default(false) @map("needs_attention")
+  occupiedSince  DateTime?   @map("occupied_since")
+  guests         Int?
+
+  floor  Floor   @relation(fields: [floorId], references: [id], onDelete: Cascade)
+  orders Order[]
+
+  @@unique([floorId, label])
+  @@index([organizationId])
+  @@map("tables")
+}
+
+model Station {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  branchId       String @map("branch_id") @db.Uuid
+  key            String
+  nameAr         String @map("name_ar")
+  nameEn         String @map("name_en")
+  sort           Int    @default(0)
+
+  branch    Branch          @relation(fields: [branchId], references: [id], onDelete: Cascade)
+  items     MenuItem[]
+  tickets   KitchenTicket[]
+  orderItems OrderItem[]
+
+  @@unique([branchId, key])
+  @@index([organizationId])
+  @@map("stations")
+}
+
+model MenuCategory {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  key            String
+  nameAr         String @map("name_ar")
+  nameEn         String @map("name_en")
+  sort           Int    @default(0)
+
+  items MenuItem[]
+
+  @@unique([organizationId, key])
+  @@map("menu_categories")
+}
+
+model MenuItem {
+  id             String  @id @default(uuid()) @db.Uuid
+  organizationId String  @map("organization_id") @db.Uuid
+  categoryId     String  @map("category_id") @db.Uuid
+  stationId      String? @map("station_id") @db.Uuid
+  slug           String
+  nameAr         String  @map("name_ar")
+  nameEn         String  @map("name_en")
+  /// VAT-inclusive price
+  priceHalala    Int     @map("price_halala")
+  vatRateBp      Int     @default(1500) @map("vat_rate_bp")
+  image          String?
+  active         Boolean @default(true)
+
+  category   MenuCategory          @relation(fields: [categoryId], references: [id])
+  station    Station?              @relation(fields: [stationId], references: [id])
+  recipe     RecipeLine[]
+  modifiers  MenuItemModifierGroup[]
+  orderItems OrderItem[]
+
+  @@unique([organizationId, slug])
+  @@map("menu_items")
+}
+
+model ModifierGroup {
+  id             String     @id @default(uuid()) @db.Uuid
+  organizationId String     @map("organization_id") @db.Uuid
+  nameAr         String     @map("name_ar")
+  nameEn         String     @map("name_en")
+  minSelect      Int        @default(0) @map("min_select")
+  maxSelect      Int        @default(1) @map("max_select")
+
+  modifiers Modifier[]
+  items     MenuItemModifierGroup[]
+
+  @@map("modifier_groups")
+}
+
+model Modifier {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  groupId        String @map("group_id") @db.Uuid
+  nameAr         String @map("name_ar")
+  nameEn         String @map("name_en")
+  priceHalala    Int    @default(0) @map("price_halala")
+
+  group ModifierGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@map("modifiers")
+}
+
+model MenuItemModifierGroup {
+  organizationId String @map("organization_id") @db.Uuid
+  menuItemId     String @map("menu_item_id") @db.Uuid
+  groupId        String @map("group_id") @db.Uuid
+
+  menuItem MenuItem      @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  group    ModifierGroup @relation(fields: [groupId], references: [id], onDelete: Cascade)
+
+  @@id([menuItemId, groupId])
+  @@map("menu_item_modifier_groups")
+}
+
+model Ingredient {
+  id                String  @id @default(uuid()) @db.Uuid
+  organizationId    String  @map("organization_id") @db.Uuid
+  slug              String
+  nameAr            String  @map("name_ar")
+  nameEn            String  @map("name_en")
+  unit              String
+  category          String
+  minLevelMilli     Int     @map("min_level_milli")
+  reorderLevelMilli Int     @map("reorder_level_milli")
+  /// Weighted average cost per base unit (halalas)
+  avgCostHalala     Int     @map("avg_cost_halala")
+  image             String?
+  supplierId        String? @map("supplier_id") @db.Uuid
+
+  supplier  Supplier?           @relation(fields: [supplierId], references: [id])
+  lots      StockLot[]
+  movements StockMovement[]
+  recipes   RecipeLine[]
+  poLines   PurchaseOrderLine[]
+
+  @@unique([organizationId, slug])
+  @@map("ingredients")
+}
+
+model StockLot {
+  id             String    @id @default(uuid()) @db.Uuid
+  organizationId String    @map("organization_id") @db.Uuid
+  branchId       String    @map("branch_id") @db.Uuid
+  ingredientId   String    @map("ingredient_id") @db.Uuid
+  qtyMilli       Int       @map("qty_milli")
+  costPerUnit    Int       @map("cost_per_unit")
+  expiresAt      DateTime? @map("expires_at")
+  receivedAt     DateTime  @default(now()) @map("received_at")
+
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, branchId, ingredientId])
+  @@map("stock_lots")
+}
+
+model StockMovement {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @map("organization_id") @db.Uuid
+  branchId       String       @map("branch_id") @db.Uuid
+  ingredientId   String       @map("ingredient_id") @db.Uuid
+  qtyMilli       Int          @map("qty_milli")
+  costHalala     Int          @default(0) @map("cost_halala")
+  type           MovementType
+  reason         String?
+  refId          String?      @map("ref_id")
+  at             DateTime     @default(now())
+
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, branchId, at])
+  @@map("stock_movements")
+}
+
+model RecipeLine {
+  organizationId String @map("organization_id") @db.Uuid
+  menuItemId     String @map("menu_item_id") @db.Uuid
+  ingredientId   String @map("ingredient_id") @db.Uuid
+  qtyMilli       Int    @map("qty_milli")
+  wasteBp        Int    @default(0) @map("waste_bp")
+
+  menuItem   MenuItem   @relation(fields: [menuItemId], references: [id], onDelete: Cascade)
+  ingredient Ingredient @relation(fields: [ingredientId], references: [id], onDelete: Cascade)
+
+  @@id([menuItemId, ingredientId])
+  @@map("recipe_lines")
+}
+
+model Supplier {
+  id             String  @id @default(uuid()) @db.Uuid
+  organizationId String  @map("organization_id") @db.Uuid
+  name           String
+  phone          String?
+  vatNumber      String? @map("vat_number")
+
+  ingredients    Ingredient[]
+  purchaseOrders PurchaseOrder[]
+
+  @@map("suppliers")
+}
+
+model PurchaseOrder {
+  id             String    @id @default(uuid()) @db.Uuid
+  organizationId String    @map("organization_id") @db.Uuid
+  branchId       String    @map("branch_id") @db.Uuid
+  supplierId     String?   @map("supplier_id") @db.Uuid
+  number         Int
+  status         PoStatus  @default(draft)
+  createdById    String?   @map("created_by_id") @db.Uuid
+  createdAt      DateTime  @default(now()) @map("created_at")
+  receivedAt     DateTime? @map("received_at")
+
+  supplier Supplier?           @relation(fields: [supplierId], references: [id])
+  lines    PurchaseOrderLine[]
+
+  @@unique([organizationId, number])
+  @@map("purchase_orders")
+}
+
+model PurchaseOrderLine {
+  id              String @id @default(uuid()) @db.Uuid
+  organizationId  String @map("organization_id") @db.Uuid
+  purchaseOrderId String @map("purchase_order_id") @db.Uuid
+  ingredientId    String @map("ingredient_id") @db.Uuid
+  qtyMilli        Int    @map("qty_milli")
+  unitCost        Int    @map("unit_cost")
+
+  purchaseOrder PurchaseOrder @relation(fields: [purchaseOrderId], references: [id], onDelete: Cascade)
+  ingredient    Ingredient    @relation(fields: [ingredientId], references: [id])
+
+  @@map("purchase_order_lines")
+}
+
+model Order {
+  id             String      @id @default(uuid()) @db.Uuid
+  organizationId String      @map("organization_id") @db.Uuid
+  branchId       String      @map("branch_id") @db.Uuid
+  number         Int
+  channel        Channel
+  tableId        String?     @map("table_id") @db.Uuid
+  guests         Int?
+  waiterId       String?     @map("waiter_id") @db.Uuid
+  status         OrderStatus @default(in_progress)
+  notes          String?
+  externalRef    String?     @map("external_ref")
+  platform       String?
+  subtotalHalala Int         @default(0) @map("subtotal_halala")
+  discountHalala Int         @default(0) @map("discount_halala")
+  serviceHalala  Int         @default(0) @map("service_halala")
+  vatHalala      Int         @default(0) @map("vat_halala")
+  totalHalala    Int         @default(0) @map("total_halala")
+  costHalala     Int         @default(0) @map("cost_halala")
+  openedAt       DateTime    @default(now()) @map("opened_at")
+  readyAt        DateTime?   @map("ready_at")
+  closedAt       DateTime?   @map("closed_at")
+
+  branch   Branch          @relation(fields: [branchId], references: [id])
+  table    DiningTable?    @relation(fields: [tableId], references: [id])
+  items    OrderItem[]
+  tickets  KitchenTicket[]
+  payments Payment[]
+  invoices Invoice[]
+  feedback Feedback?
+
+  @@unique([branchId, number])
+  @@index([organizationId, branchId, openedAt])
+  @@index([organizationId, status])
+  @@map("orders")
+}
+
+model OrderItem {
+  id             String     @id @default(uuid()) @db.Uuid
+  organizationId String     @map("organization_id") @db.Uuid
+  orderId        String     @map("order_id") @db.Uuid
+  menuItemId     String     @map("menu_item_id") @db.Uuid
+  stationId      String?    @map("station_id") @db.Uuid
+  qty            Int
+  unitPrice      Int        @map("unit_price")
+  unitCost       Int        @default(0) @map("unit_cost")
+  /// Modifier labels chosen, e.g. ["medium"]; resolved to text in the UI
+  modifiers      Json       @default("[]")
+  notes          String?
+  status         ItemStatus @default(queued)
+  firedAt        DateTime?  @map("fired_at")
+  readyAt        DateTime?  @map("ready_at")
+
+  order    Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  menuItem MenuItem @relation(fields: [menuItemId], references: [id])
+  station  Station? @relation(fields: [stationId], references: [id])
+
+  @@index([organizationId, orderId])
+  @@map("order_items")
+}
+
+model KitchenTicket {
+  id             String       @id @default(uuid()) @db.Uuid
+  organizationId String       @map("organization_id") @db.Uuid
+  orderId        String       @map("order_id") @db.Uuid
+  stationId      String       @map("station_id") @db.Uuid
+  status         TicketStatus @default(cooking)
+  createdAt      DateTime     @default(now()) @map("created_at")
+  readyAt        DateTime?    @map("ready_at")
+  estimatedMin   Int          @default(12) @map("estimated_min")
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  station Station @relation(fields: [stationId], references: [id])
+
+  @@index([organizationId, stationId, status])
+  @@map("kitchen_tickets")
+}
+
+model Payment {
+  id             String        @id @default(uuid()) @db.Uuid
+  organizationId String        @map("organization_id") @db.Uuid
+  orderId        String        @map("order_id") @db.Uuid
+  method         PaymentMethod
+  amountHalala   Int           @map("amount_halala")
+  ref            String?
+  at             DateTime      @default(now())
+
+  order Order @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+/// Issued invoices are immutable; corrections use credit/debit notes.
+model Invoice {
+  id             String        @id @default(uuid()) @db.Uuid
+  organizationId String        @map("organization_id") @db.Uuid
+  orderId        String        @map("order_id") @db.Uuid
+  type           InvoiceType
+  icv            Int
+  uuid           String        @db.Uuid
+  pih            String?
+  xml            String?
+  qr             String?
+  status         InvoiceStatus @default(pending)
+  zatcaResponse  Json?         @map("zatca_response")
+  totalHalala    Int           @map("total_halala")
+  vatHalala      Int           @map("vat_halala")
+  issuedAt       DateTime      @default(now()) @map("issued_at")
+  reportedAt     DateTime?     @map("reported_at")
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  @@unique([organizationId, icv])
+  @@map("invoices")
+}
+
+model Customer {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  name           String
+  /// Personal data: encrypted at rest (PDPL)
+  phoneEnc       String?  @map("phone_enc")
+  createdAt      DateTime @default(now()) @map("created_at")
+
+  @@map("customers")
+}
+
+model Feedback {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  branchId       String   @map("branch_id") @db.Uuid
+  orderId        String?  @unique @map("order_id") @db.Uuid
+  rating         Int
+  comment        String?
+  authorName     String?  @map("author_name")
+  at             DateTime @default(now())
+
+  order Order? @relation(fields: [orderId], references: [id])
+
+  @@index([organizationId, at])
+  @@map("feedback")
+}
+
+model Expense {
+  id             String          @id @default(uuid()) @db.Uuid
+  organizationId String          @map("organization_id") @db.Uuid
+  branchId       String          @map("branch_id") @db.Uuid
+  category       ExpenseCategory
+  amountHalala   Int             @map("amount_halala")
+  day            DateTime        @db.Date
+
+  @@index([organizationId, branchId, day])
+  @@map("expenses")
+}
+
+model ActivityEvent {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  branchId       String   @map("branch_id") @db.Uuid
+  kind           String
+  data           Json     @default("{}")
+  at             DateTime @default(now())
+
+  @@index([organizationId, branchId, at])
+  @@map("activity_events")
+}
+
+enum ReservationStatus {
+  booked
+  seated
+  cancelled
+  no_show
+}
+
+model Reservation {
+  id             String            @id @default(uuid()) @db.Uuid
+  organizationId String            @map("organization_id") @db.Uuid
+  branchId       String            @map("branch_id") @db.Uuid
+  tableId        String?           @map("table_id") @db.Uuid
+  guestName      String            @map("guest_name")
+  /// Personal data: encrypted at rest (PDPL)
+  phoneEnc       String?           @map("phone_enc")
+  guests         Int
+  section        Section           @default(family)
+  at             DateTime
+  status         ReservationStatus @default(booked)
+  notes          String?
+  createdAt      DateTime          @default(now()) @map("created_at")
+
+  @@index([organizationId, branchId, at])
+  @@map("reservations")
+}
+
+model DeliveryChannel {
+  id             String @id @default(uuid()) @db.Uuid
+  organizationId String @map("organization_id") @db.Uuid
+  branchId       String @map("branch_id") @db.Uuid
+  platform       String
+  credentialsRef String? @map("credentials_ref")
+  commissionBp   Int    @map("commission_bp")
+
+  @@unique([branchId, platform])
+  @@map("delivery_channels")
+}
+
+model ComplianceDocument {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  branchId       String?  @map("branch_id") @db.Uuid
+  type           String
+  number         String?
+  expiresAt      DateTime @map("expires_at")
+  fileUrl        String?  @map("file_url")
+
+  @@map("compliance_documents")
+}
+
+/// Append-only. The app role has no UPDATE/DELETE grant on this table.
+model AuditLog {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  userId         String?  @map("user_id") @db.Uuid
+  action         String
+  entity         String
+  entityId       String?  @map("entity_id")
+  diff           Json?
+  ip             String?
+  at             DateTime @default(now())
+
+  @@index([organizationId, at])
+  @@map("audit_logs")
+}

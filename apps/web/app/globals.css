@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens (DESIGN.md). Stored as RGB triplets so Tailwind alpha modifiers work. */
+:root {
+  --bg: 248 247 245;
+  --surface: 255 255 255;
+  --surface-muted: 244 243 241;
+  --border: 237 235 231;
+  --sidebar: 25 25 25;
+  --sidebar-text: 237 237 237;
+  --sidebar-muted: 154 154 154;
+  --sidebar-line: 48 48 48;
+  --text: 20 20 20;
+  --text-muted: 110 107 102;
+  --text-subtle: 156 152 144;
+  --accent: 248 101 29;
+  --accent-hover: 232 87 16;
+  --accent-soft: 254 241 232;
+  --accent-soft-2: 255 247 241;
+  --accent-line: 251 212 185;
+  --success: 18 147 109;
+  --success-soft: 230 246 240;
+  --success-table: 35 138 75;
+  --danger: 229 72 77;
+  --danger-soft: 253 238 238;
+  --warning: 240 138 36;
+  --warning-soft: 255 244 230;
+  --info: 74 164 247;
+  --info-soft: 234 244 254;
+  --violet: 107 85 233;
+  --violet-soft: 239 237 253;
+  --teal: 66 179 154;
+  --teal-soft: 229 246 242;
+  --neutral: 128 127 128;
+  --neutral-soft: 240 239 238;
+  --floor: 247 242 236;
+  --floor-wall: 205 200 192;
+  color-scheme: light;
+}
+
+html,
+body {
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+}
+
+body {
+  font-feature-settings: 'tnum' 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keyboard focus is always visible (spec 10: accessibility). */
+:focus-visible {
+  outline: 2px solid rgb(var(--accent));
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Mirror directional icons (arrows, chevrons) in RTL. */
+[dir='rtl'] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(var(--border)) transparent;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 200ms ease-out both;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+.skeleton {
+  background: linear-gradient(90deg, rgb(var(--surface-muted)) 0%, rgb(var(--border)) 50%, rgb(var(--surface-muted)) 100%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 6px;
+}
+
+@media print {
+  aside,
+  header,
+  .no-print {
+    display: none !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+}
