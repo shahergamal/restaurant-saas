@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Typecheck, unit tests and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @sufra/shared build
+      - run: pnpm --filter @sufra/api db:generate
+      - run: pnpm -r typecheck
+      - run: pnpm --filter @sufra/shared test
+      - run: pnpm --filter @sufra/api test
+      - run: pnpm --filter @sufra/api build
+      - run: pnpm --filter @sufra/web build
+        env:
+          API_INTERNAL_URL: http://localhost:4000
+          NEXT_PUBLIC_WS_URL: http://localhost:4000
+
+  e2e:
+    name: API security and tenancy tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: postgres_ci_only
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U postgres" --health-interval 5s --health-retries 10
+      redis:
+        image: redis:7-alpine
+        ports: ['6379:6379']
+    env:
+      DATABASE_URL: postgresql://sufra_owner:sufra_owner_dev@localhost:5432/sufra?schema=public
+      DATABASE_URL_APP: postgresql://sufra_app:sufra_app_dev@localhost:5432/sufra?schema=public
+      REDIS_URL: redis://localhost:6379
+      # Throwaway values for the CI database only; real secrets never live in the repo.
+      JWT_ACCESS_SECRET: ci-only-access-secret-0123456789abcdef
+      JWT_REFRESH_SECRET: ci-only-refresh-secret-0123456789abcdef
+      DATA_ENCRYPTION_KEY: Y2ktb25seS1lbmNyeXB0aW9uLWtleS0zMi1ieXRlcyE=
+      WEB_ORIGINS: http://localhost:3000
+      COOKIE_SECURE: 'false'
+      TZ_DEFAULT: Asia/Riyadh
+      MFA_ENFORCE: 'false'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Create database roles
+        run: PGPASSWORD=postgres_ci_only psql -h localhost -U postgres -v ON_ERROR_STOP=1 -f infra/db/init.sql
+      - run: pnpm --filter @sufra/shared build
+      - run: pnpm --filter @sufra/api db:generate
+      - run: pnpm db:migrate
+      - run: pnpm db:seed
+      - run: pnpm --filter @sufra/api test:e2e
