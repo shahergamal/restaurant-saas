@@ -9,6 +9,7 @@ import { api } from '@/lib/api';
 import { useI18n } from '@/lib/i18n';
 import { useSession } from '@/lib/session';
 import { cn } from '@/lib/cn';
+import { imgSrc } from '@/lib/photos';
 import { Card, CardHeader } from '@/components/ui/card';
 import { PageHeader } from '@/components/ui/page-header';
 import { PillTabs } from '@/components/ui/pill-tabs';
@@ -210,7 +211,7 @@ function Promo() {
   return (
     <div className="mt-4 flex flex-wrap items-center gap-5 overflow-hidden rounded-lg border border-border bg-surface pe-4 shadow-card">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/img/scenes/pasta-banner.svg" alt="" className="h-[68px] w-[114px] object-cover" />
+      <img src={imgSrc('scenes/pasta-banner')} alt="" className="h-[68px] w-[114px] object-cover" />
       <div className="min-w-[160px] flex-1">
         <p className="text-md font-semibold">{t('orders.promoTitle')}</p>
         <p className="mt-0.5 text-xs text-ink-muted">{t('orders.promoBody')}</p>

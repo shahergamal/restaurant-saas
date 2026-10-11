@@ -8,6 +8,7 @@ import { LOCALE_COOKIE, useI18n, useSetPreference } from '@/lib/i18n';
 import { Button } from '@/components/ui/button';
 import { Field, Input } from '@/components/ui/field';
 import { LogoMark } from '@/components/ui/logo';
+import { imgSrc } from '@/lib/photos';
 
 const DEMO = [
   ['manager@qidr.demo', 'manager'],
@@ -183,7 +184,7 @@ export function LoginForm({ demo }: { demo: boolean }) {
 
       <div className="relative hidden overflow-hidden bg-sidebar lg:block">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/img/scenes/hero.svg" alt="" className="absolute inset-0 size-full object-cover" />
+        <img src={imgSrc('scenes/hero')} alt="" className="absolute inset-0 size-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
         <div className="absolute inset-x-12 bottom-12 text-white">
           <p className="text-3xl font-bold leading-snug">{t('orders.promoTitle')}</p>

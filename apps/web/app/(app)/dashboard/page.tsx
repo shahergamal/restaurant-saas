@@ -26,6 +26,7 @@ import { api } from '@/lib/api';
 import { useI18n } from '@/lib/i18n';
 import { useSession } from '@/lib/session';
 import { cn } from '@/lib/cn';
+import { imgSrc } from '@/lib/photos';
 import { Card, CardHeader } from '@/components/ui/card';
 import { Delta } from '@/components/ui/delta';
 import { Progress } from '@/components/ui/progress';
@@ -58,7 +59,7 @@ function Hero({ data }: { data?: Dashboard }) {
   return (
     <div className="relative h-[246px] overflow-hidden rounded-lg bg-sidebar">
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/img/scenes/hero.svg" alt="" className="absolute inset-0 size-full object-cover rtl:-scale-x-100" />
+      <img src={imgSrc('scenes/hero')} alt="" className="absolute inset-0 size-full object-cover rtl:-scale-x-100" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/35 to-transparent rtl:bg-gradient-to-l" />
       <div className="relative flex h-full flex-col justify-center px-8 text-white">
         <h1 className="text-[34px] font-bold leading-tight tracking-tight">

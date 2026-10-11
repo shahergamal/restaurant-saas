@@ -18,7 +18,7 @@ const en = {
   roles: { owner: 'Owner', manager: 'Restaurant Manager', cashier: 'Cashier', waiter: 'Waiter', chef: 'Chef', accountant: 'Accountant', inventory_clerk: 'Inventory Clerk' },
   common: {
     viewAll: 'View All', today: 'Today', retry: 'Try again', loading: 'Loading…', errorTitle: 'Couldn’t load this', errorBody: 'Check your connection and try again.',
-    empty: 'Nothing here yet', cancel: 'Cancel', save: 'Save changes', saving: 'Saving…', saved: 'Saved', close: 'Close', confirm: 'Confirm', actions: 'Actions',
+    empty: 'Nothing here yet', cancel: 'Cancel', save: 'Save changes', saving: 'Saving…', saved: 'Saved', close: 'Close', period: 'Period', confirm: 'Confirm', actions: 'Actions',
     minutes: '{n} min', minAgo: '{n} min ago', hAgo: '{n} h ago', justNow: 'just now', since: 'Since {t}', vsLastWeek: 'vs. last week', vsYesterday: 'vs. yesterday',
     vsLastHour: 'vs. last hour', vsPrevWeek: 'vs. previous week', vsPrev: 'vs. previous period', guests: '{n} guests', guest: '{n} guest', table: 'Table {n}',
     all: 'All', showing: 'Showing {from}–{to} of {total} items', prev: 'Previous page', next: 'Next page', page: 'Page {n}', permission: 'You don’t have access to this section.',
@@ -105,7 +105,7 @@ const en = {
     salesUpBody: 'Your revenue is {n}% higher than last week.', salesDownBody: 'Your revenue is {n}% lower than last week.', wasteAlert: 'Food Waste Alert',
     wasteBody: 'Vegetables waste is {n}% higher than expected.', wasteOk: 'Vegetable waste is under control this week.', reviewInventory: 'Review inventory', peak: 'Peak Hours',
     peakBody: 'Most orders were placed between {a} – {b}.', extraStaff: 'Consider extra staff', branches: 'Best Performing Branches', branch: 'Branch', growth: 'Growth',
-    promoTitle: 'Better Insights. Higher Profits.', promoBody: 'Make smarter decisions with Qidr Reports.', weekOf: 'Week of {d}', vat: 'VAT report',
+    promoTitle: 'Better Insights. Higher Profits.', promoBody: 'Make smarter decisions with Qidr Reports.', weekOf: 'Week of {d}', vat: 'VAT report', salesCsv: 'Sales report (CSV)', vatInvoices: 'Invoices', vatNet: 'Net sales', vatAmount: 'VAT 15%', vatTotal: 'Total incl. VAT',
   },
   foodCost: {
     title: 'Food Cost & Profit', subtitle: 'Track food cost, analyze profit margins and make smarter menu decisions.', export: 'Export Report', overview: 'Overview',
@@ -170,7 +170,7 @@ const ar: DeepString<Dict> = {
   roles: { owner: 'المالك', manager: 'مدير المطعم', cashier: 'كاشير', waiter: 'ويتر', chef: 'شيف', accountant: 'محاسب', inventory_clerk: 'أمين مخزن' },
   common: {
     viewAll: 'عرض الكل', today: 'اليوم', retry: 'أعد المحاولة', loading: 'جارٍ التحميل…', errorTitle: 'تعذّر تحميل البيانات', errorBody: 'تحقق من الاتصال ثم أعد المحاولة.',
-    empty: 'لا يوجد شيء بعد', cancel: 'إلغاء', save: 'احفظ التغييرات', saving: 'جارٍ الحفظ…', saved: 'تم الحفظ', close: 'إغلاق', confirm: 'تأكيد', actions: 'إجراءات',
+    empty: 'لا يوجد شيء بعد', cancel: 'إلغاء', save: 'احفظ التغييرات', saving: 'جارٍ الحفظ…', saved: 'تم الحفظ', close: 'إغلاق', period: 'الفترة', confirm: 'تأكيد', actions: 'إجراءات',
     minutes: '{n} د', minAgo: 'منذ {n} د', hAgo: 'منذ {n} س', justNow: 'الآن', since: 'منذ {t}', vsLastWeek: 'مقارنة بالأسبوع الماضي', vsYesterday: 'مقارنة بأمس',
     vsLastHour: 'مقارنة بالساعة الماضية', vsPrevWeek: 'مقارنة بالأسبوع السابق', vsPrev: 'مقارنة بالفترة السابقة', guests: '{n} ضيوف', guest: '{n} ضيف', table: 'طاولة {n}',
     all: 'الكل', showing: 'عرض {from}–{to} من {total} صنف', prev: 'الصفحة السابقة', next: 'الصفحة التالية', page: 'صفحة {n}', permission: 'ليس لديك صلاحية لهذا القسم.',
@@ -252,7 +252,7 @@ const ar: DeepString<Dict> = {
     salesDownBody: 'إيرادك أقل بنسبة {n}% من الأسبوع الماضي.', wasteAlert: 'تنبيه هدر الطعام', wasteBody: 'هدر الخضار أعلى بنسبة {n}% من المتوقع.',
     wasteOk: 'هدر الخضار تحت السيطرة هذا الأسبوع.', reviewInventory: 'راجع المخزون', peak: 'ساعات الذروة', peakBody: 'أغلب الطلبات كانت بين {a} و{b}.',
     extraStaff: 'فكّر في موظفين إضافيين', branches: 'أفضل الفروع أداءً', branch: 'الفرع', growth: 'النمو', promoTitle: 'رؤى أفضل. أرباح أعلى.',
-    promoBody: 'اتخذ قرارات أذكى مع تقارير قِدر.', weekOf: 'أسبوع {d}', vat: 'تقرير الضريبة',
+    promoBody: 'اتخذ قرارات أذكى مع تقارير قِدر.', weekOf: 'أسبوع {d}', vat: 'تقرير الضريبة', salesCsv: 'تقرير المبيعات (CSV)', vatInvoices: 'الفواتير', vatNet: 'صافي المبيعات', vatAmount: 'ضريبة القيمة المضافة 15%', vatTotal: 'الإجمالي شامل الضريبة',
   },
   foodCost: {
     title: 'تكلفة الطعام والربح', subtitle: 'تابع تكلفة الطعام وحلّل هوامش الربح واتخذ قرارات أذكى للقائمة.', export: 'تصدير التقرير', overview: 'نظرة عامة', menuItems: 'أصناف القائمة',
