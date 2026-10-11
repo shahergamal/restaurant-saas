@@ -178,7 +178,7 @@ export function FloorMap({
       ) : null}
       {L.booth && !compact ? <rect x={L.booth.x} y={L.booth.y} width={L.booth.w} height={L.booth.h} rx={6} fill="#EDE6DD" stroke="#CFC6BA" strokeWidth={6} aria-hidden /> : null}
       {(L.plants ?? []).map(([x, y], i) => (
-        <Plant key={i} x={x} y={y} s={compact ? 1.4 : 1.25} />
+        <Plant key={i} x={x} y={y} s={compact ? 1.4 : 0.85} />
       ))}
       {L.entrance && !compact ? (
         <foreignObject x={L.entrance.x - 90} y={H - 40} width={180} height={30} aria-hidden>

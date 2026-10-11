@@ -13,7 +13,7 @@ import { computeTotals, recipeCost } from '@sufra/shared';
 import { CATEGORIES, FEEDBACK_COMMENTS, FLOOR_LAYOUTS, INGREDIENTS, MENU, STATIONS, SUPPLIERS, TABLES } from './seed-data';
 
 const prisma = new PrismaClient({ datasources: { db: { url: process.env.DATABASE_URL } } });
-const PASSWORD = process.env.SEED_PASSWORD ?? 'Sufra@Demo2026';
+const PASSWORD = process.env.SEED_PASSWORD ?? 'Qidr@Demo2026';
 const MIN = 60_000;
 const HOUR = 60 * MIN;
 const DAY = 24 * HOUR;
@@ -113,16 +113,16 @@ async function main() {
   const main = branches[0]!;
 
   const people = [
-    { email: 'owner@sufra.demo', ar: 'خالد العتيبي', en: 'Khalid Alotaibi', role: 'owner' },
-    { email: 'manager@sufra.demo', ar: 'أحمد حسن', en: 'Ahmed Hassan', role: 'manager' },
-    { email: 'cashier@sufra.demo', ar: 'ريم الشهري', en: 'Reem Alshehri', role: 'cashier' },
-    { email: 'chef@sufra.demo', ar: 'ماجد القحطاني', en: 'Majed Alqahtani', role: 'chef' },
-    { email: 'accountant@sufra.demo', ar: 'منى الدوسري', en: 'Mona Aldosari', role: 'accountant' },
-    { email: 'stock@sufra.demo', ar: 'سلطان الحربي', en: 'Sultan Alharbi', role: 'inventory_clerk' },
-    { email: 'omar@sufra.demo', ar: 'عمر أحمد', en: 'Omar Ahmed', role: 'waiter' },
-    { email: 'faisal@sufra.demo', ar: 'فيصل المطيري', en: 'Faisal Almutairi', role: 'waiter' },
-    { email: 'yousef@sufra.demo', ar: 'يوسف الزهراني', en: 'Yousef Alzahrani', role: 'waiter' },
-    { email: 'nasser@sufra.demo', ar: 'ناصر الغامدي', en: 'Nasser Alghamdi', role: 'waiter' },
+    { email: 'owner@qidr.demo', ar: 'خالد العتيبي', en: 'Khalid Alotaibi', role: 'owner' },
+    { email: 'manager@qidr.demo', ar: 'أحمد حسن', en: 'Ahmed Hassan', role: 'manager' },
+    { email: 'cashier@qidr.demo', ar: 'ريم الشهري', en: 'Reem Alshehri', role: 'cashier' },
+    { email: 'chef@qidr.demo', ar: 'ماجد القحطاني', en: 'Majed Alqahtani', role: 'chef' },
+    { email: 'accountant@qidr.demo', ar: 'منى الدوسري', en: 'Mona Aldosari', role: 'accountant' },
+    { email: 'stock@qidr.demo', ar: 'سلطان الحربي', en: 'Sultan Alharbi', role: 'inventory_clerk' },
+    { email: 'omar@qidr.demo', ar: 'عمر أحمد', en: 'Omar Ahmed', role: 'waiter' },
+    { email: 'faisal@qidr.demo', ar: 'فيصل المطيري', en: 'Faisal Almutairi', role: 'waiter' },
+    { email: 'yousef@qidr.demo', ar: 'يوسف الزهراني', en: 'Yousef Alzahrani', role: 'waiter' },
+    { email: 'nasser@qidr.demo', ar: 'ناصر الغامدي', en: 'Nasser Alghamdi', role: 'waiter' },
   ] as const;
   const users: Record<string, string> = {};
   for (const p of people) {
@@ -135,7 +135,7 @@ async function main() {
     users[p.email] = u.id;
   }
   const waiters = people.filter((p) => p.role === 'waiter').map((p) => users[p.email]!);
-  const managerId = users['manager@sufra.demo']!;
+  const managerId = users['manager@qidr.demo']!;
 
   // ---------- Second tenant (isolation demo) ----------
   const other = await prisma.organization.create({ data: { nameAr: 'مطبخ النخلة', nameEn: 'Palm Kitchen', plan: 'starter' } });
@@ -405,7 +405,7 @@ async function main() {
       live: L,
       order: {
         id, organizationId: O, branchId: main.id, number: 0, channel, tableId: L.table ? T(L.table) : null, guests: L.guests ?? null,
-        waiterId: L.table ? (L.table === 7 ? users['omar@sufra.demo'] : pick(waiters)) : null, status: L.status, notes: L.notes ?? null,
+        waiterId: L.table ? (L.table === 7 ? users['omar@qidr.demo'] : pick(waiters)) : null, status: L.status, notes: L.notes ?? null,
         subtotalHalala: totals.itemsTotal, vatHalala: totals.vat, totalHalala: totals.total,
         costHalala: lines.reduce((s, l) => s + l.m.cost * l.qty, 0), openedAt: new Date(opened), readyAt,
       },
@@ -595,7 +595,7 @@ async function main() {
   });
 
   console.log('Done.');
-  console.log(`  Sign in: manager@sufra.demo / ${PASSWORD}   (owner@sufra.demo, chef@sufra.demo, … use the same password)`);
+  console.log(`  Sign in: manager@qidr.demo / ${PASSWORD}   (owner@qidr.demo, chef@qidr.demo, … use the same password)`);
   console.log(`  Second tenant for isolation checks: owner@palm.demo / ${PASSWORD}`);
 }
 

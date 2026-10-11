@@ -71,6 +71,7 @@ function makeI18n(locale: Locale, numerals: Numerals) {
       return v >= 1000 ? `${nf1.format(v / 1000)}${ar ? ' ألف' : 'K'}` : nf.format(Math.round(v));
     },
     currency,
+    unit: (unit: string) => unitLabel(unit, ar),
     qty: (milli: number, unit: string) => `${nf1.format(milli / 1000)} ${unitLabel(unit, ar)}`,
     date: (d: Date | string | number, opts: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'short', year: 'numeric' }) => dtf(opts).format(toDate(d)),
     longDate: (d: Date | string | number) => dtf({ weekday: 'short', day: 'numeric', month: 'long', year: 'numeric' }).format(toDate(d)),

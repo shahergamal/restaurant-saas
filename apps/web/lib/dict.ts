@@ -1,7 +1,7 @@
 /* UI copy. Arabic is the primary language; English mirrors the reference screens. */
 
 const en = {
-  brand: { name: 'Sufra', tagline: 'Manage • Serve • Grow' },
+  brand: { name: 'Qidr', tagline: 'Manage • Serve • Grow' },
   nav: {
     dashboard: 'Dashboard', orders: 'Orders', tables: 'Tables', kitchen: 'Kitchen', inventory: 'Inventory', sales: 'Sales', staff: 'Staff',
     reports: 'Reports', foodCost: 'Food Cost & Profit', reservations: 'Reservations', customers: 'Customers', suppliers: 'Suppliers',
@@ -18,7 +18,7 @@ const en = {
   roles: { owner: 'Owner', manager: 'Restaurant Manager', cashier: 'Cashier', waiter: 'Waiter', chef: 'Chef', accountant: 'Accountant', inventory_clerk: 'Inventory Clerk' },
   common: {
     viewAll: 'View All', today: 'Today', retry: 'Try again', loading: 'Loading…', errorTitle: 'Couldn’t load this', errorBody: 'Check your connection and try again.',
-    empty: 'Nothing here yet', cancel: 'Cancel', save: 'Save changes', saving: 'Saving…', saved: 'Saved', close: 'Close', confirm: 'Confirm', actions: 'Actions',
+    empty: 'Nothing here yet', cancel: 'Cancel', save: 'Save changes', saving: 'Saving…', saved: 'Saved', close: 'Close', period: 'Period', edit: 'Edit', confirm: 'Confirm', actions: 'Actions',
     minutes: '{n} min', minAgo: '{n} min ago', hAgo: '{n} h ago', justNow: 'just now', since: 'Since {t}', vsLastWeek: 'vs. last week', vsYesterday: 'vs. yesterday',
     vsLastHour: 'vs. last hour', vsPrevWeek: 'vs. previous week', vsPrev: 'vs. previous period', guests: '{n} guests', guest: '{n} guest', table: 'Table {n}',
     all: 'All', showing: 'Showing {from}–{to} of {total} items', prev: 'Previous page', next: 'Next page', page: 'Page {n}', permission: 'You don’t have access to this section.',
@@ -32,7 +32,7 @@ const en = {
   },
   channel: { dine_in: 'Dine-in', takeaway: 'Takeaway', delivery: 'Delivery', hungerstation: 'HungerStation', jahez: 'Jahez', keeta: 'Keeta' },
   login: {
-    title: 'Sign in to Sufra', subtitle: 'Run your restaurant with clarity: orders, kitchen, stock and real profit in one place.',
+    title: 'Sign in to Qidr', subtitle: 'Run your restaurant with clarity: orders, kitchen, stock and real profit in one place.',
     email: 'Work email', password: 'Password', submit: 'Sign in', submitting: 'Signing in…', mfaTitle: 'Two-step verification',
     mfaBody: 'Enter the 6-digit code from your authenticator app.', mfaCode: 'Verification code', verify: 'Verify', back: 'Back',
     invalid: 'Email or password is incorrect.', locked: 'Too many attempts. The account is locked for 15 minutes.', throttled: 'Too many attempts. Wait a minute and try again.',
@@ -105,7 +105,7 @@ const en = {
     salesUpBody: 'Your revenue is {n}% higher than last week.', salesDownBody: 'Your revenue is {n}% lower than last week.', wasteAlert: 'Food Waste Alert',
     wasteBody: 'Vegetables waste is {n}% higher than expected.', wasteOk: 'Vegetable waste is under control this week.', reviewInventory: 'Review inventory', peak: 'Peak Hours',
     peakBody: 'Most orders were placed between {a} – {b}.', extraStaff: 'Consider extra staff', branches: 'Best Performing Branches', branch: 'Branch', growth: 'Growth',
-    promoTitle: 'Better Insights. Higher Profits.', promoBody: 'Make smarter decisions with Sufra Reports.', weekOf: 'Week of {d}', vat: 'VAT report',
+    promoTitle: 'Better Insights. Higher Profits.', promoBody: 'Make smarter decisions with Qidr Reports.', weekOf: 'Week of {d}', vat: 'VAT report', salesCsv: 'Sales report (CSV)', vatInvoices: 'Invoices', vatNet: 'Net sales', vatAmount: 'VAT 15%', vatTotal: 'Total incl. VAT',
   },
   foodCost: {
     title: 'Food Cost & Profit', subtitle: 'Track food cost, analyze profit margins and make smarter menu decisions.', export: 'Export Report', overview: 'Overview',
@@ -136,11 +136,11 @@ const en = {
     cost: 'Recipe cost', margin: 'Margin', active: 'Active', hidden: 'Hidden', recipe: 'Recipe', category: 'Category', created: 'Item added', nameAr: 'Name (Arabic)', nameEn: 'Name (English)',
     showItem: 'Show on menu', hideItem: 'Hide from menu', noRecipe: 'No recipe yet', priceHelp: 'Shown to guests including 15% VAT',
   },
-  staff: { title: 'Staff', subtitle: 'People, roles and access', add: 'Add Staff Member', name: 'Name', email: 'Email', role: 'Role', mfa: '2-step', active: 'Active', password: 'Temporary password', created: 'Staff member added', emailTaken: 'This email is already in use' },
+  staff: { title: 'Staff', subtitle: 'People, roles and access', add: 'Add Staff Member', name: 'Name', email: 'Email', role: 'Role', mfa: '2-step', active: 'Active', password: 'Temporary password', created: 'Staff member added', emailTaken: 'This email is already in use', passwordHelp: 'At least 10 characters. They change it after first sign-in.' },
   sales: { title: 'Sales', subtitle: 'Paid orders, payment methods and invoices', number: 'Order #', closed: 'Paid at', method: 'Payment', invoice: 'Invoice', total: 'Total', vat: 'VAT', notIssued: 'Not issued', pending: 'Pending ZATCA' },
   reservations: { title: 'Reservations', subtitle: 'Upcoming bookings for today and tomorrow', guest: 'Guest', time: 'Time', party: 'Party', table: 'Table', status: 'Status', st: { booked: 'Booked', seated: 'Seated', cancelled: 'Cancelled', no_show: 'No-show' }, seat: 'Seat', cancel: 'Cancel', empty: 'No upcoming reservations' },
   customers: { title: 'Customers', subtitle: 'Guests who shared their details (personal data is encrypted)', name: 'Name', phone: 'Mobile', since: 'Customer since' },
-  suppliers: { title: 'Suppliers', subtitle: 'Who you buy from and what they supply', name: 'Supplier', phone: 'Phone', vat: 'VAT number', items: 'Ingredients', pos: 'Purchase orders' },
+  suppliers: { title: 'Suppliers', subtitle: 'Who you buy from and what they supply', name: 'Supplier', phone: 'Phone', vat: 'VAT number', items: 'Ingredients', pos: 'Purchase orders', receive: 'Mark received', received: 'Stock added from the purchase order', st: { draft: 'Draft', sent: 'Sent', received: 'Received', cancelled: 'Cancelled' } },
   errors: {
     table_has_open_order: 'This table still has an open order.', target_not_available: 'That table is not available.', insufficient_stock: 'Not enough stock for that quantity.',
     permission_denied: 'You don’t have permission to do this.', validation_failed: 'Please check the highlighted fields.', payment_total_mismatch: 'Payments must add up to the total.',
@@ -154,7 +154,7 @@ type Dict = typeof en;
 type DeepString<T> = { [K in keyof T]: T[K] extends string ? string : DeepString<T[K]> };
 
 const ar: DeepString<Dict> = {
-  brand: { name: 'سُفرة', tagline: 'أدِر • قدِّم • انمُ' },
+  brand: { name: 'قِدر', tagline: 'أدِر • قدِّم • انمُ' },
   nav: {
     dashboard: 'لوحة التحكم', orders: 'الطلبات', tables: 'الطاولات', kitchen: 'المطبخ', inventory: 'المخزون', sales: 'المبيعات', staff: 'الموظفون', reports: 'التقارير',
     foodCost: 'تكلفة الطعام والربح', reservations: 'الحجوزات', customers: 'العملاء', suppliers: 'الموردون', menu: 'القائمة', settings: 'الإعدادات', logout: 'تسجيل الخروج',
@@ -170,7 +170,7 @@ const ar: DeepString<Dict> = {
   roles: { owner: 'المالك', manager: 'مدير المطعم', cashier: 'كاشير', waiter: 'ويتر', chef: 'شيف', accountant: 'محاسب', inventory_clerk: 'أمين مخزن' },
   common: {
     viewAll: 'عرض الكل', today: 'اليوم', retry: 'أعد المحاولة', loading: 'جارٍ التحميل…', errorTitle: 'تعذّر تحميل البيانات', errorBody: 'تحقق من الاتصال ثم أعد المحاولة.',
-    empty: 'لا يوجد شيء بعد', cancel: 'إلغاء', save: 'احفظ التغييرات', saving: 'جارٍ الحفظ…', saved: 'تم الحفظ', close: 'إغلاق', confirm: 'تأكيد', actions: 'إجراءات',
+    empty: 'لا يوجد شيء بعد', cancel: 'إلغاء', save: 'احفظ التغييرات', saving: 'جارٍ الحفظ…', saved: 'تم الحفظ', close: 'إغلاق', period: 'الفترة', edit: 'تعديل', confirm: 'تأكيد', actions: 'إجراءات',
     minutes: '{n} د', minAgo: 'منذ {n} د', hAgo: 'منذ {n} س', justNow: 'الآن', since: 'منذ {t}', vsLastWeek: 'مقارنة بالأسبوع الماضي', vsYesterday: 'مقارنة بأمس',
     vsLastHour: 'مقارنة بالساعة الماضية', vsPrevWeek: 'مقارنة بالأسبوع السابق', vsPrev: 'مقارنة بالفترة السابقة', guests: '{n} ضيوف', guest: '{n} ضيف', table: 'طاولة {n}',
     all: 'الكل', showing: 'عرض {from}–{to} من {total} صنف', prev: 'الصفحة السابقة', next: 'الصفحة التالية', page: 'صفحة {n}', permission: 'ليس لديك صلاحية لهذا القسم.',
@@ -183,7 +183,7 @@ const ar: DeepString<Dict> = {
   },
   channel: { dine_in: 'صالة', takeaway: 'سفري', delivery: 'توصيل', hungerstation: 'هنقرستيشن', jahez: 'جاهز', keeta: 'كيتا' },
   login: {
-    title: 'سجّل الدخول إلى سُفرة', subtitle: 'أدِر مطعمك بوضوح: الطلبات والمطبخ والمخزون والربح الحقيقي في مكان واحد.', email: 'البريد الإلكتروني للعمل',
+    title: 'سجّل الدخول إلى قِدر', subtitle: 'أدِر مطعمك بوضوح: الطلبات والمطبخ والمخزون والربح الحقيقي في مكان واحد.', email: 'البريد الإلكتروني للعمل',
     password: 'كلمة المرور', submit: 'تسجيل الدخول', submitting: 'جارٍ تسجيل الدخول…', mfaTitle: 'التحقق بخطوتين', mfaBody: 'أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة.',
     mfaCode: 'رمز التحقق', verify: 'تحقّق', back: 'رجوع', invalid: 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', locked: 'محاولات كثيرة. الحساب مقفل لمدة 15 دقيقة.',
     throttled: 'محاولات كثيرة. انتظر دقيقة ثم حاول مجدداً.', mfaInvalid: 'الرمز غير مطابق. جرّب أحدث رمز.', demo: 'حسابات تجريبية', demoHint: 'كل الحسابات التجريبية تستخدم كلمة المرور',
@@ -252,7 +252,7 @@ const ar: DeepString<Dict> = {
     salesDownBody: 'إيرادك أقل بنسبة {n}% من الأسبوع الماضي.', wasteAlert: 'تنبيه هدر الطعام', wasteBody: 'هدر الخضار أعلى بنسبة {n}% من المتوقع.',
     wasteOk: 'هدر الخضار تحت السيطرة هذا الأسبوع.', reviewInventory: 'راجع المخزون', peak: 'ساعات الذروة', peakBody: 'أغلب الطلبات كانت بين {a} و{b}.',
     extraStaff: 'فكّر في موظفين إضافيين', branches: 'أفضل الفروع أداءً', branch: 'الفرع', growth: 'النمو', promoTitle: 'رؤى أفضل. أرباح أعلى.',
-    promoBody: 'اتخذ قرارات أذكى مع تقارير سُفرة.', weekOf: 'أسبوع {d}', vat: 'تقرير الضريبة',
+    promoBody: 'اتخذ قرارات أذكى مع تقارير قِدر.', weekOf: 'أسبوع {d}', vat: 'تقرير الضريبة', salesCsv: 'تقرير المبيعات (CSV)', vatInvoices: 'الفواتير', vatNet: 'صافي المبيعات', vatAmount: 'ضريبة القيمة المضافة 15%', vatTotal: 'الإجمالي شامل الضريبة',
   },
   foodCost: {
     title: 'تكلفة الطعام والربح', subtitle: 'تابع تكلفة الطعام وحلّل هوامش الربح واتخذ قرارات أذكى للقائمة.', export: 'تصدير التقرير', overview: 'نظرة عامة', menuItems: 'أصناف القائمة',
@@ -282,11 +282,11 @@ const ar: DeepString<Dict> = {
     cost: 'تكلفة الوصفة', margin: 'الهامش', active: 'ظاهر', hidden: 'مخفي', recipe: 'الوصفة', category: 'الفئة', created: 'تمت إضافة الصنف', nameAr: 'الاسم بالعربية',
     nameEn: 'الاسم بالإنجليزية', showItem: 'إظهار في القائمة', hideItem: 'إخفاء من القائمة', noRecipe: 'لا توجد وصفة بعد', priceHelp: 'يظهر للضيف شاملاً ضريبة 15%',
   },
-  staff: { title: 'الموظفون', subtitle: 'الأشخاص والأدوار والصلاحيات', add: 'إضافة موظف', name: 'الاسم', email: 'البريد', role: 'الدور', mfa: 'خطوتين', active: 'نشط', password: 'كلمة مرور مؤقتة', created: 'تمت إضافة الموظف', emailTaken: 'البريد مستخدم مسبقاً' },
+  staff: { title: 'الموظفون', subtitle: 'الأشخاص والأدوار والصلاحيات', add: 'إضافة موظف', name: 'الاسم', email: 'البريد', role: 'الدور', mfa: 'خطوتين', active: 'نشط', password: 'كلمة مرور مؤقتة', created: 'تمت إضافة الموظف', emailTaken: 'البريد مستخدم مسبقاً', passwordHelp: '10 أحرف على الأقل، ويغيّرها الموظف بعد أول دخول.' },
   sales: { title: 'المبيعات', subtitle: 'الطلبات المدفوعة وطرق الدفع والفواتير', number: 'رقم الطلب', closed: 'وقت الدفع', method: 'الدفع', invoice: 'الفاتورة', total: 'الإجمالي', vat: 'الضريبة', notIssued: 'لم تصدر', pending: 'بانتظار زاتكا' },
   reservations: { title: 'الحجوزات', subtitle: 'الحجوزات القادمة لليوم والغد', guest: 'الضيف', time: 'الوقت', party: 'العدد', table: 'الطاولة', status: 'الحالة', st: { booked: 'محجوز', seated: 'جلس', cancelled: 'ملغي', no_show: 'لم يحضر' }, seat: 'إجلاس', cancel: 'إلغاء', empty: 'لا توجد حجوزات قادمة' },
   customers: { title: 'العملاء', subtitle: 'الضيوف الذين شاركوا بياناتهم (البيانات الشخصية مشفرة)', name: 'الاسم', phone: 'الجوال', since: 'عميل منذ' },
-  suppliers: { title: 'الموردون', subtitle: 'من تشتري منهم وماذا يوردون', name: 'المورد', phone: 'الهاتف', vat: 'الرقم الضريبي', items: 'المكونات', pos: 'أوامر الشراء' },
+  suppliers: { title: 'الموردون', subtitle: 'من تشتري منهم وماذا يوردون', name: 'المورد', phone: 'الهاتف', vat: 'الرقم الضريبي', items: 'المكونات', pos: 'أوامر الشراء', receive: 'تأكيد الاستلام', received: 'تمت إضافة الكميات من أمر الشراء', st: { draft: 'مسودة', sent: 'مُرسل', received: 'مُستلم', cancelled: 'ملغي' } },
   errors: {
     table_has_open_order: 'لا يزال على الطاولة طلب مفتوح.', target_not_available: 'هذه الطاولة غير متاحة.', insufficient_stock: 'الكمية المتوفرة لا تكفي.',
     permission_denied: 'ليس لديك صلاحية لهذا الإجراء.', validation_failed: 'راجع الحقول المحددة.', payment_total_mismatch: 'يجب أن يساوي مجموع الدفعات الإجمالي.',

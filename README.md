@@ -1,4 +1,4 @@
-# سُفرة · Sufra
+# قِدر · Qidr
 
 نظام إدارة مطاعم (SaaS) متعدد الفروع: الطلبات، الطاولات، شاشة المطبخ، المخزون، التقارير، وتكلفة الطعام والربح.
 واجهة عربية (RTL) أولاً مع الإنجليزية، الريال السعودي، ضريبة 15%، والتاريخ الهجري بجانب الميلادي.
@@ -35,7 +35,7 @@ pnpm db:seed                          # Saudi demo data; re-run any time to refr
 pnpm dev                              # web on http://localhost:3000, API on http://localhost:4000
 ```
 
-Demo login: `manager@sufra.demo` / `Sufra@Demo2026` (also `owner@`, `cashier@`, `chef@`, `accountant@`, `stock@` with the same password).
+Demo login: `manager@qidr.demo` / `Qidr@Demo2026` (also `owner@`, `cashier@`, `chef@`, `accountant@`, `stock@` with the same password).
 
 ## Tests
 ```bash

@@ -141,7 +141,7 @@ export class AuthService {
     if (user.mfaEnabled) throw new ForbiddenException('mfa_already_enabled');
     const secret = authenticator.generateSecret(20);
     await this.sys.user.update({ where: { id: userId }, data: { mfaSecretEnc: this.crypto.encrypt(secret) } });
-    const otpauthUrl = authenticator.keyuri(user.email, 'Sufra', secret);
+    const otpauthUrl = authenticator.keyuri(user.email, 'Qidr', secret);
     return { otpauthUrl, qrDataUrl: await QRCode.toDataURL(otpauthUrl, { margin: 1, width: 220 }) };
   }
 

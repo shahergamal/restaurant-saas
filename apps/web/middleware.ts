@@ -7,16 +7,18 @@ export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const hasSession = req.cookies.has('sufra_session');
   if (!hasSession && !PUBLIC.some((p) => pathname.startsWith(p))) {
-    const url = req.nextUrl.clone();
-    url.pathname = '/login';
-    url.search = pathname === '/' ? '' : `?next=${encodeURIComponent(pathname + search)}`;
+    // Behind a proxy req.nextUrl carries the internal host, so build the target from the public one.
+    const host = req.headers.get('x-forwarded-host') ?? req.headers.get('host') ?? req.nextUrl.host;
+    const proto = req.headers.get('x-forwarded-proto')?.split(',')[0] ?? req.nextUrl.protocol.replace(':', '');
+    const url = new URL('/login', `${proto}://${host}`);
+    if (pathname !== '/') url.searchParams.set('next', pathname + search);
     return NextResponse.redirect(url);
   }
 
   const nonce = btoa(crypto.randomUUID());
   const dev = process.env.NODE_ENV !== 'production';
   const ws = process.env.NEXT_PUBLIC_WS_URL ?? 'http://localhost:4000';
-  const wsOrigin = new URL(ws);
+  const wsOrigin = ws ? new URL(ws) : null;
   const csp = [
     `default-src 'self'`,
     `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'${dev ? " 'unsafe-eval'" : ''}`,
@@ -24,7 +26,7 @@ export function middleware(req: NextRequest) {
     `style-src 'self' 'unsafe-inline'`,
     `img-src 'self' data: blob:`,
     `font-src 'self'`,
-    `connect-src 'self' ${wsOrigin.origin} ${wsOrigin.origin.replace(/^http/, 'ws')}`,
+    `connect-src 'self'${wsOrigin ? ` ${wsOrigin.origin} ${wsOrigin.origin.replace(/^http/, 'ws')}` : ''}`,
     `media-src 'self' data:`,
     `frame-ancestors 'none'`,
     `base-uri 'self'`,

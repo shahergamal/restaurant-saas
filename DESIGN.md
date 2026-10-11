@@ -1,4 +1,4 @@
-# Design System: Sufra (سُفرة)
+# Design System: Qidr (قِدر)
 
 Character: a calm, warm control room for a busy restaurant. Dense numbers, quiet chrome, orange only where action or urgency lives.
 

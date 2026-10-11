@@ -1,0 +1,31 @@
+// Cloudflare Containers deploy: a Worker in front of the all-in-one image built from the repo Dockerfile.
+// Secrets (DATABASE_URL, DATABASE_URL_APP, JWT_ACCESS_SECRET, JWT_REFRESH_SECRET, DATA_ENCRYPTION_KEY)
+// are set on the Worker in the dashboard or with `wrangler secret put`, never in this file.
+{
+  "name": "qidr",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "observability": { "enabled": true },
+  "containers": [
+    {
+      "class_name": "QidrApp",
+      "image": "../../Dockerfile",
+      "image_build_context": "../..",
+      "instance_type": "standard-1",
+      "max_instances": 1
+    }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "QIDR", "class_name": "QidrApp" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["QidrApp"] }],
+  "vars": {
+    "NODE_ENV": "production",
+    "COOKIE_SECURE": "true",
+    "MFA_ENFORCE": "false",
+    "TZ_DEFAULT": "Asia/Riyadh",
+    "SHOW_DEMO_ACCOUNTS": "1",
+    "SEED_ON_START": "if-empty",
+    "WEB_ORIGINS": ""
+  }
+}

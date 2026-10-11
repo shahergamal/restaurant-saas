@@ -9,6 +9,7 @@ import { useI18n } from '@/lib/i18n';
 import { NAV } from '@/lib/nav';
 import { logout, useSession } from '@/lib/session';
 import { cn } from '@/lib/cn';
+import { imgSrc } from '@/lib/photos';
 import { LogoMark } from '@/components/ui/logo';
 import { MenuContent, MenuItem, MenuLabel, MenuRoot, MenuTrigger } from '@/components/ui/menu';
 
@@ -33,7 +34,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
         aria-label={t('nav.main')}
       >
         <div className="flex items-center gap-3 px-6 pb-6 pt-7">
-          <LogoMark className="size-11" />
+          <LogoMark className="size-11" tone="light" />
           <div className="leading-tight">
             <p className="text-[26px] font-bold tracking-tight text-white">{t('brand.name')}</p>
             <p className="mt-0.5 text-2xs text-sidebar-muted">{t('brand.tagline')}</p>
@@ -78,7 +79,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
           <MenuRoot>
             <MenuTrigger className="mt-3 flex w-full items-center gap-3 rounded-md px-2 py-2 text-start hover:bg-white/[0.06]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/img/scenes/branch.svg" alt="" className="size-11 shrink-0 rounded-md object-cover" />
+              <img src={imgSrc('scenes/branch')} alt="" className="size-11 shrink-0 rounded-md object-cover" />
               <span className="min-w-0 flex-1">
                 <span className="block truncate text-sm font-medium text-white">{name(me.organization)}</span>
                 <span className="block truncate text-2xs text-sidebar-muted">{name(branch)}</span>
