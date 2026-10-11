@@ -10,12 +10,12 @@ import { Field, Input } from '@/components/ui/field';
 import { LogoMark } from '@/components/ui/logo';
 
 const DEMO = [
-  ['manager@sufra.demo', 'manager'],
-  ['owner@sufra.demo', 'owner'],
-  ['cashier@sufra.demo', 'cashier'],
-  ['chef@sufra.demo', 'chef'],
-  ['accountant@sufra.demo', 'accountant'],
-  ['stock@sufra.demo', 'inventory_clerk'],
+  ['manager@qidr.demo', 'manager'],
+  ['owner@qidr.demo', 'owner'],
+  ['cashier@qidr.demo', 'cashier'],
+  ['chef@qidr.demo', 'chef'],
+  ['accountant@qidr.demo', 'accountant'],
+  ['stock@qidr.demo', 'inventory_clerk'],
 ] as const;
 
 function safeNext(next: string | null) {
@@ -158,7 +158,7 @@ export function LoginForm({ demo }: { demo: boolean }) {
             <div className="mt-8 rounded-lg border border-dashed border-border bg-surface p-4">
               <p className="text-xs font-semibold">{t('login.demo')}</p>
               <p className="mt-1 text-xs text-ink-muted">
-                {t('login.demoHint')} <code dir="ltr" className="rounded bg-surface-muted px-1.5 py-0.5 font-mono text-ink">Sufra@Demo2026</code>
+                {t('login.demoHint')} <code dir="ltr" className="rounded bg-surface-muted px-1.5 py-0.5 font-mono text-ink">Qidr@Demo2026</code>
               </p>
               <div className="mt-3 flex flex-wrap gap-1.5">
                 {DEMO.map(([mail, role]) => (
@@ -167,7 +167,7 @@ export function LoginForm({ demo }: { demo: boolean }) {
                     type="button"
                     onClick={() => {
                       setEmail(mail);
-                      setPassword('Sufra@Demo2026');
+                      setPassword('Qidr@Demo2026');
                     }}
                     className="rounded border border-border px-2.5 py-1 text-xs hover:border-accent hover:text-accent"
                   >

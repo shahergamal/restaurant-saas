@@ -1,7 +1,7 @@
 /* UI copy. Arabic is the primary language; English mirrors the reference screens. */
 
 const en = {
-  brand: { name: 'Sufra', tagline: 'Manage • Serve • Grow' },
+  brand: { name: 'Qidr', tagline: 'Manage • Serve • Grow' },
   nav: {
     dashboard: 'Dashboard', orders: 'Orders', tables: 'Tables', kitchen: 'Kitchen', inventory: 'Inventory', sales: 'Sales', staff: 'Staff',
     reports: 'Reports', foodCost: 'Food Cost & Profit', reservations: 'Reservations', customers: 'Customers', suppliers: 'Suppliers',
@@ -32,7 +32,7 @@ const en = {
   },
   channel: { dine_in: 'Dine-in', takeaway: 'Takeaway', delivery: 'Delivery', hungerstation: 'HungerStation', jahez: 'Jahez', keeta: 'Keeta' },
   login: {
-    title: 'Sign in to Sufra', subtitle: 'Run your restaurant with clarity: orders, kitchen, stock and real profit in one place.',
+    title: 'Sign in to Qidr', subtitle: 'Run your restaurant with clarity: orders, kitchen, stock and real profit in one place.',
     email: 'Work email', password: 'Password', submit: 'Sign in', submitting: 'Signing in…', mfaTitle: 'Two-step verification',
     mfaBody: 'Enter the 6-digit code from your authenticator app.', mfaCode: 'Verification code', verify: 'Verify', back: 'Back',
     invalid: 'Email or password is incorrect.', locked: 'Too many attempts. The account is locked for 15 minutes.', throttled: 'Too many attempts. Wait a minute and try again.',
@@ -105,7 +105,7 @@ const en = {
     salesUpBody: 'Your revenue is {n}% higher than last week.', salesDownBody: 'Your revenue is {n}% lower than last week.', wasteAlert: 'Food Waste Alert',
     wasteBody: 'Vegetables waste is {n}% higher than expected.', wasteOk: 'Vegetable waste is under control this week.', reviewInventory: 'Review inventory', peak: 'Peak Hours',
     peakBody: 'Most orders were placed between {a} – {b}.', extraStaff: 'Consider extra staff', branches: 'Best Performing Branches', branch: 'Branch', growth: 'Growth',
-    promoTitle: 'Better Insights. Higher Profits.', promoBody: 'Make smarter decisions with Sufra Reports.', weekOf: 'Week of {d}', vat: 'VAT report',
+    promoTitle: 'Better Insights. Higher Profits.', promoBody: 'Make smarter decisions with Qidr Reports.', weekOf: 'Week of {d}', vat: 'VAT report',
   },
   foodCost: {
     title: 'Food Cost & Profit', subtitle: 'Track food cost, analyze profit margins and make smarter menu decisions.', export: 'Export Report', overview: 'Overview',
@@ -154,7 +154,7 @@ type Dict = typeof en;
 type DeepString<T> = { [K in keyof T]: T[K] extends string ? string : DeepString<T[K]> };
 
 const ar: DeepString<Dict> = {
-  brand: { name: 'سُفرة', tagline: 'أدِر • قدِّم • انمُ' },
+  brand: { name: 'قِدر', tagline: 'أدِر • قدِّم • انمُ' },
   nav: {
     dashboard: 'لوحة التحكم', orders: 'الطلبات', tables: 'الطاولات', kitchen: 'المطبخ', inventory: 'المخزون', sales: 'المبيعات', staff: 'الموظفون', reports: 'التقارير',
     foodCost: 'تكلفة الطعام والربح', reservations: 'الحجوزات', customers: 'العملاء', suppliers: 'الموردون', menu: 'القائمة', settings: 'الإعدادات', logout: 'تسجيل الخروج',
@@ -183,7 +183,7 @@ const ar: DeepString<Dict> = {
   },
   channel: { dine_in: 'صالة', takeaway: 'سفري', delivery: 'توصيل', hungerstation: 'هنقرستيشن', jahez: 'جاهز', keeta: 'كيتا' },
   login: {
-    title: 'سجّل الدخول إلى سُفرة', subtitle: 'أدِر مطعمك بوضوح: الطلبات والمطبخ والمخزون والربح الحقيقي في مكان واحد.', email: 'البريد الإلكتروني للعمل',
+    title: 'سجّل الدخول إلى قِدر', subtitle: 'أدِر مطعمك بوضوح: الطلبات والمطبخ والمخزون والربح الحقيقي في مكان واحد.', email: 'البريد الإلكتروني للعمل',
     password: 'كلمة المرور', submit: 'تسجيل الدخول', submitting: 'جارٍ تسجيل الدخول…', mfaTitle: 'التحقق بخطوتين', mfaBody: 'أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة.',
     mfaCode: 'رمز التحقق', verify: 'تحقّق', back: 'رجوع', invalid: 'البريد الإلكتروني أو كلمة المرور غير صحيحة.', locked: 'محاولات كثيرة. الحساب مقفل لمدة 15 دقيقة.',
     throttled: 'محاولات كثيرة. انتظر دقيقة ثم حاول مجدداً.', mfaInvalid: 'الرمز غير مطابق. جرّب أحدث رمز.', demo: 'حسابات تجريبية', demoHint: 'كل الحسابات التجريبية تستخدم كلمة المرور',
@@ -252,7 +252,7 @@ const ar: DeepString<Dict> = {
     salesDownBody: 'إيرادك أقل بنسبة {n}% من الأسبوع الماضي.', wasteAlert: 'تنبيه هدر الطعام', wasteBody: 'هدر الخضار أعلى بنسبة {n}% من المتوقع.',
     wasteOk: 'هدر الخضار تحت السيطرة هذا الأسبوع.', reviewInventory: 'راجع المخزون', peak: 'ساعات الذروة', peakBody: 'أغلب الطلبات كانت بين {a} و{b}.',
     extraStaff: 'فكّر في موظفين إضافيين', branches: 'أفضل الفروع أداءً', branch: 'الفرع', growth: 'النمو', promoTitle: 'رؤى أفضل. أرباح أعلى.',
-    promoBody: 'اتخذ قرارات أذكى مع تقارير سُفرة.', weekOf: 'أسبوع {d}', vat: 'تقرير الضريبة',
+    promoBody: 'اتخذ قرارات أذكى مع تقارير قِدر.', weekOf: 'أسبوع {d}', vat: 'تقرير الضريبة',
   },
   foodCost: {
     title: 'تكلفة الطعام والربح', subtitle: 'تابع تكلفة الطعام وحلّل هوامش الربح واتخذ قرارات أذكى للقائمة.', export: 'تصدير التقرير', overview: 'نظرة عامة', menuItems: 'أصناف القائمة',

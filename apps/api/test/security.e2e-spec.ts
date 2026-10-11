@@ -15,7 +15,7 @@ try {
   /* CI provides env */
 }
 
-const PASSWORD = process.env.SEED_PASSWORD ?? 'Sufra@Demo2026';
+const PASSWORD = process.env.SEED_PASSWORD ?? 'Qidr@Demo2026';
 const ORIGIN = 'http://localhost:3000';
 
 describe('security & tenancy', () => {
@@ -48,14 +48,14 @@ describe('security & tenancy', () => {
 
   it('rejects bad credentials without revealing whether the account exists', async () => {
     const a = await request(app.getHttpServer()).post('/v1/auth/login').send({ email: 'nobody@x.sa', password: 'wrong-password' });
-    const b = await request(app.getHttpServer()).post('/v1/auth/login').send({ email: 'chef@sufra.demo', password: 'wrong-password' });
+    const b = await request(app.getHttpServer()).post('/v1/auth/login').send({ email: 'chef@qidr.demo', password: 'wrong-password' });
     expect(a.status).toBe(401);
     expect(b.status).toBe(401);
     expect(a.body.message).toBe(b.body.message);
   });
 
   it('isolates organizations at the API layer', async () => {
-    const olive = await login('manager@sufra.demo');
+    const olive = await login('manager@qidr.demo');
     const palm = await login('owner@palm.demo');
     const oliveOrders = await request(app.getHttpServer()).get('/v1/orders').set('Cookie', olive).expect(200);
     expect(oliveOrders.body.total).toBeGreaterThan(0);
@@ -96,19 +96,19 @@ describe('security & tenancy', () => {
   });
 
   it('enforces role permissions', async () => {
-    const chef = await login('chef@sufra.demo');
+    const chef = await login('chef@qidr.demo');
     await request(app.getHttpServer()).get('/v1/kitchen/board').set('Cookie', chef).expect(200);
     await request(app.getHttpServer()).get('/v1/food-cost/overview').set('Cookie', chef).expect(403);
     await request(app.getHttpServer()).patch('/v1/settings/organization').set('Cookie', chef).set('origin', ORIGIN).send({}).expect(403);
   });
 
   it('blocks cross-site state-changing requests', async () => {
-    const m = await login('manager@sufra.demo');
+    const m = await login('manager@qidr.demo');
     await request(app.getHttpServer()).post('/v1/auth/mfa/setup').set('Cookie', m).set('origin', 'https://evil.example').expect(403);
   });
 
   it('rotates refresh tokens and revokes the family on reuse', async () => {
-    const cookies = await login('cashier@sufra.demo');
+    const cookies = await login('cashier@qidr.demo');
     const rt = cookies.find((c) => c.startsWith('sufra_rt='))!.split(';')[0]!;
     const first = await request(app.getHttpServer()).post('/v1/auth/refresh').set('Cookie', [rt]).set('origin', ORIGIN).expect(200);
     const rt2 = (first.get('set-cookie') as unknown as string[]).find((c) => c.startsWith('sufra_rt='))!.split(';')[0]!;
@@ -117,7 +117,7 @@ describe('security & tenancy', () => {
   });
 
   it('computes order totals on the server and decrements stock by recipe when paid', async () => {
-    const m = await login('manager@sufra.demo');
+    const m = await login('manager@qidr.demo');
     const menu = await request(app.getHttpServer()).get('/v1/menu/items').set('Cookie', m).expect(200);
     const salad = menu.body.find((i: { slug: string }) => i.slug === 'caesar-salad');
     const created = await request(app.getHttpServer())

@@ -13,7 +13,7 @@ import { ToastProvider } from '@/components/ui/toast';
 import type { Locale } from '@/lib/dict';
 
 export const metadata: Metadata = {
-  title: { default: 'سُفرة · Sufra', template: '%s · Sufra' },
+  title: { default: 'قِدر · Qidr', template: '%s · Qidr' },
   description: 'Restaurant operations: orders, tables, kitchen, inventory and real food cost.',
   icons: { icon: '/img/logo.svg' },
 };

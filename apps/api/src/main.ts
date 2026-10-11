@@ -26,7 +26,7 @@ async function bootstrap() {
   app.enableShutdownHooks();
 
   if (cfg.NODE_ENV !== 'production') {
-    const doc = SwaggerModule.createDocument(app, new DocumentBuilder().setTitle('Sufra API').setVersion('1').addCookieAuth('sufra_at').build());
+    const doc = SwaggerModule.createDocument(app, new DocumentBuilder().setTitle('Qidr API').setVersion('1').addCookieAuth('sufra_at').build());
     SwaggerModule.setup('docs', app, doc, { jsonDocumentUrl: 'docs/openapi.json' });
   }
   await app.listen(cfg.API_PORT);

@@ -33,7 +33,7 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
         aria-label={t('nav.main')}
       >
         <div className="flex items-center gap-3 px-6 pb-6 pt-7">
-          <LogoMark className="size-11" />
+          <LogoMark className="size-11" tone="light" />
           <div className="leading-tight">
             <p className="text-[26px] font-bold tracking-tight text-white">{t('brand.name')}</p>
             <p className="mt-0.5 text-2xs text-sidebar-muted">{t('brand.tagline')}</p>
