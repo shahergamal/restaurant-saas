@@ -18,7 +18,8 @@ export class KitchenService {
     const branchId = currentBranchId();
     const now = new Date();
     const since = startOfRiyadhDay(now);
-    const [stations, tickets, completed] = await Promise.all([
+    const [org, stations, tickets, completed] = await Promise.all([
+      this.db.client.organization.findFirstOrThrow({ select: { delayThresholdMin: true } }),
       this.db.client.station.findMany({ where: { branchId }, orderBy: { sort: 'asc' } }),
       this.db.client.kitchenTicket.findMany({
         where: { station: { branchId }, status: 'cooking' },
@@ -40,6 +41,7 @@ export class KitchenService {
       }),
     ]);
     return {
+      thresholdMin: org.delayThresholdMin,
       stations: stations.map((s) => ({
         id: s.id,
         key: s.key,
