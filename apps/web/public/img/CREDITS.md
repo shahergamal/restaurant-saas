@@ -1,0 +1,83 @@
+# Photo credits
+
+Every `.webp` photo under `apps/web/public/img` comes from [Unsplash](https://unsplash.com) and is used under the [Unsplash License](https://unsplash.com/license): free for commercial and non-commercial use, no permission or attribution required. It may not be sold unaltered or used to build a competing photo service.
+
+Photos were cropped and converted to WebP. Anything without a photo falls back to its drawn `.svg`. The logo (`img/logo.svg`) is the brand mark, not a photo.
+
+| Image | Source |
+|---|---|
+| `food/americano.webp` | https://images.unsplash.com/photo-1551030173-122aabc4489c |
+| `food/bbq-ribs.webp` | https://images.unsplash.com/photo-1529193591184-b1d58069ecdd |
+| `food/beef-burger.webp` | https://images.unsplash.com/photo-1568901346375-23c9450c58cd |
+| `food/beef-steak.webp` | https://images.unsplash.com/photo-1558030006-450675393462 |
+| `food/caesar-salad.webp` | https://images.unsplash.com/photo-1550304943-4f24f54ddde9 |
+| `food/cappuccino.webp` | https://images.unsplash.com/photo-1572442388796-11668a67e53d |
+| `food/carbonara.webp` | https://images.unsplash.com/photo-1612874742237-6526221588e3 |
+| `food/cheesecake.webp` | https://images.unsplash.com/photo-1533134242443-d4fd215305ad |
+| `food/chicken-breast.webp` | https://images.unsplash.com/photo-1532550907401-a500c9a57435 |
+| `food/chicken-kabsa.webp` | https://images.unsplash.com/photo-1633945274405-b6c8069047b0 |
+| `food/chicken-pasta.webp` | https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb |
+| `food/chicken-shawarma.webp` | https://images.unsplash.com/photo-1529006557810-274b9b2fc783 |
+| `food/chocolate-lava-cake.webp` | https://images.unsplash.com/photo-1606313564200-e75d5e30476c |
+| `food/fettuccine-alfredo.webp` | https://images.unsplash.com/photo-1645112411341-6c4fd023714a |
+| `food/french-fries.webp` | https://images.unsplash.com/photo-1573080496219-bb080dd4f877 |
+| `food/fresh-juice.webp` | https://images.unsplash.com/photo-1622597467836-f3285f2131b8 |
+| `food/garden-salad.webp` | https://images.unsplash.com/photo-1512621776951-a57141f2eefd |
+| `food/garlic-bread.webp` | https://images.unsplash.com/photo-1619535860434-ba1d8fa12536 |
+| `food/greek-salad.webp` | https://images.unsplash.com/photo-1540189549336-e6e99c3679fe |
+| `food/grilled-cheese.webp` | https://images.unsplash.com/photo-1528736235302-52922df5c122 |
+| `food/grilled-salmon.webp` | https://images.unsplash.com/photo-1467003909585-2f8a72700288 |
+| `food/hummus.webp` | https://images.unsplash.com/photo-1637949385162-e416fb15b2ce |
+| `food/iced-latte.webp` | https://images.unsplash.com/photo-1517701604599-bb29b565090c |
+| `food/iced-tea.webp` | https://images.unsplash.com/photo-1499638673689-79a0b5115d87 |
+| `food/kunafa.webp` | https://images.unsplash.com/photo-1598110750624-207050c4f28c |
+| `food/lamb-chops.webp` | https://images.unsplash.com/photo-1432139555190-58524dae6a55 |
+| `food/lamb-mandi.webp` | https://images.unsplash.com/photo-1589302168068-964664d93dc0 |
+| `food/lasagna.webp` | https://images.unsplash.com/photo-1574894709920-11b28e7367e3 |
+| `food/lemonade.webp` | https://images.unsplash.com/photo-1621263764928-df1444c5e859 |
+| `food/margherita-pizza.webp` | https://images.unsplash.com/photo-1574071318508-1cdbab80d002 |
+| `food/mint-lemonade.webp` | https://images.unsplash.com/photo-1556679343-c7306c1976bc |
+| `food/mixed-grill.webp` | https://images.unsplash.com/photo-1544025162-d76694265947 |
+| `food/onion-rings.webp` | https://images.unsplash.com/photo-1639024471283-03518883512d |
+| `food/orange-juice.webp` | https://images.unsplash.com/photo-1600271886742-f049cd451bba |
+| `food/pasta-alfredo.webp` | https://images.unsplash.com/photo-1608219992759-8d74ed8d76eb |
+| `food/penne-arrabbiata.webp` | https://images.unsplash.com/photo-1608897013039-887f21d8c804 |
+| `food/pesto-pasta.webp` | https://images.unsplash.com/photo-1473093295043-cdd812d0e601 |
+| `food/quinoa-salad.webp` | https://images.unsplash.com/photo-1505576399279-565b52d4ac71 |
+| `food/ribeye-steak.webp` | https://images.unsplash.com/photo-1600891964092-4316c288032e |
+| `food/roasted-veggies.webp` | https://images.unsplash.com/photo-1540420773420-3366772f4999 |
+| `food/seafood-pasta.webp` | https://images.unsplash.com/photo-1563379926898-05f4575a45d8 |
+| `food/soft-drink.webp` | https://images.unsplash.com/photo-1581636625402-29b2a704ef13 |
+| `food/spaghetti-bolognese.webp` | https://images.unsplash.com/photo-1622973536968-3ead9e780960 |
+| `food/tomato-soup.webp` | https://images.unsplash.com/photo-1547592166-23ac45744acd |
+| `food/veggie-burger.webp` | https://images.unsplash.com/photo-1520072959219-c595dc870360 |
+| `ingredients/basil.webp` | https://images.unsplash.com/photo-1618375569909-3c8616cf7733 |
+| `ingredients/beef.webp` | https://images.unsplash.com/photo-1588168333986-5078d3ae3976 |
+| `ingredients/bell-peppers.webp` | https://images.unsplash.com/photo-1563565375-f3fdfdbefa83 |
+| `ingredients/butter.webp` | https://images.unsplash.com/photo-1589985270826-4b7bb135bc9d |
+| `ingredients/cheese.webp` | https://images.unsplash.com/photo-1486297678162-eb2a19b0a32d |
+| `ingredients/chicken-breast.webp` | https://images.unsplash.com/photo-1604503468506-a8da13d82791 |
+| `ingredients/chickpeas.webp` | https://images.unsplash.com/photo-1515543904379-3d757afe72e4 |
+| `ingredients/coffee-beans.webp` | https://images.unsplash.com/photo-1447933601403-0c6688de566e |
+| `ingredients/cucumbers.webp` | https://images.unsplash.com/photo-1449300079323-02e209d9d3a6 |
+| `ingredients/eggs.webp` | https://images.unsplash.com/photo-1506976785307-8732e854ad03 |
+| `ingredients/flour.webp` | https://images.unsplash.com/photo-1610725664285-7c57e6eeac3f |
+| `ingredients/garlic.webp` | https://images.unsplash.com/photo-1540148426945-6cf22a6b2383 |
+| `ingredients/lamb.webp` | https://images.unsplash.com/photo-1603048297172-c92544798d5a |
+| `ingredients/lemons.webp` | https://images.unsplash.com/photo-1590502593747-42a996133562 |
+| `ingredients/lettuce.webp` | https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1 |
+| `ingredients/milk.webp` | https://images.unsplash.com/photo-1550583724-b2692b85b150 |
+| `ingredients/mint.webp` | https://images.unsplash.com/photo-1628556270448-4d4e4148e1b1 |
+| `ingredients/mozzarella.webp` | https://images.unsplash.com/photo-1618164436241-4473940d1f5c |
+| `ingredients/olive-oil.webp` | https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5 |
+| `ingredients/onions.webp` | https://images.unsplash.com/photo-1618512496248-a07fe83aa8cb |
+| `ingredients/oranges.webp` | https://images.unsplash.com/photo-1547514701-42782101795e |
+| `ingredients/pasta.webp` | https://images.unsplash.com/photo-1551462147-ff29053bfc14 |
+| `ingredients/potatoes.webp` | https://images.unsplash.com/photo-1518977676601-b53f82aba655 |
+| `ingredients/rice.webp` | https://images.unsplash.com/photo-1586201375761-83865001e31c |
+| `ingredients/salmon.webp` | https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6 |
+| `ingredients/tomatoes.webp` | https://images.unsplash.com/photo-1546094096-0df4bcaaa337 |
+| `scenes/branch.webp` | https://images.unsplash.com/photo-1555396273-367ea4eb4db5 |
+| `scenes/hero.webp` | https://images.unsplash.com/photo-1517248135467-4c7edcad34c4 |
+| `scenes/pasta-banner.webp` | https://images.unsplash.com/photo-1551183053-bf91a1d81141 |
+| `scenes/promo.webp` | https://images.unsplash.com/photo-1504674900247-0877df9cc836 |
