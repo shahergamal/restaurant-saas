@@ -2,6 +2,10 @@
 # All-in-one start: migrate, optionally seed the demo data, then run API + web behind one port.
 set -e
 cd /app/apps/api
+if [ -n "$DEMO_SUPERUSER_URL" ]; then
+  BOOT=$(node /app/deploy/demo-bootstrap.mjs)
+  eval "$BOOT"
+fi
 npx prisma migrate deploy
 if [ "$SEED_ON_START" = "true" ]; then
   npx ts-node --transpile-only prisma/seed.ts
