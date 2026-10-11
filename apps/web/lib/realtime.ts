@@ -9,8 +9,10 @@ const listeners = new Set<(event: string, payload: unknown) => void>();
 
 function connect() {
   if (socket) return socket;
+  // Empty NEXT_PUBLIC_WS_URL = same origin (the single-container deploy proxies /ws to the API).
   const url = process.env.NEXT_PUBLIC_WS_URL ?? 'http://localhost:4000';
-  socket = io(url, { path: '/ws', withCredentials: true, transports: ['websocket'], reconnectionDelayMax: 10_000 });
+  const opts = { path: '/ws', withCredentials: true, transports: ['websocket'], reconnectionDelayMax: 10_000 };
+  socket = url ? io(url, opts) : io(opts);
   socket.onAny((event: string, payload: unknown) => listeners.forEach((l) => l(event, payload)));
   return socket;
 }
